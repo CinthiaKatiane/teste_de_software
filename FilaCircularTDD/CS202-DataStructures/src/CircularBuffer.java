@@ -6,13 +6,9 @@ public class CircularBuffer {
 	private int cap;
 	private ArrayList<Integer> buffer = new ArrayList<Integer>();
 	
-	public CircularBuffer() {
+	public CircularBuffer(int i) {
 		buffer_counter = 0;
 		out_counter = 0;
-		cap = 1000;
-	}
-
-	public CircularBuffer(int i) {
 		cap = i;
 	}
 
@@ -55,8 +51,16 @@ public class CircularBuffer {
 			throw new CircularBufferException("Get from empty circular buffer");
 		}
 	}
-
+	
 	public int capacity() {
 		return cap;
 	}
+
+	public int cat(int i){
+		int value = i % capacity();
+		int resultado = buffer.get(value);
+		return resultado;
+			
+	}
+	
 }

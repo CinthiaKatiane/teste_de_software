@@ -64,7 +64,7 @@ public class CircularBufferTest extends TestCase {
 	 */
 
 	protected void setUp() throws Exception {
-		buffer = new CircularBuffer();
+		buffer = new CircularBuffer(10);
 	}
 	
 	/*
@@ -280,8 +280,17 @@ public class CircularBufferTest extends TestCase {
 	 * Implemente um teste que avalia uma caracteristica que a fila circular deve ter que os testes
 	 * acima não exercitam.
 	 */
-	
-	
+	 
+	/*
+	 * A ideia desse teste é fazer um workaround da fila e verificar se o elemento em i é igual ao 
+	 * elemento de i+uma volta completa
+	 * 	 
+	 */
+	public void testCircular(){
+		fillTheBuffer(900, buffer.capacity());
+		int i = 5;
+		assertEquals(buffer.cat(i), buffer.cat(i+(3*buffer.capacity()))); 
+	}
 
 	
 	
