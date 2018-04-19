@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class CircularBuffer {
 	private int buffer_counter;
@@ -15,46 +14,49 @@ public class CircularBuffer {
 
 	public CircularBuffer(int i) {
 		cap = i;
-		
 	}
 
 	public boolean isEmpty() {
-		if (buffer_counter > 0) 
-		{ 
+		if (buffer_counter > 0){ 
 			return false;
 		} 
-		else 
-		{
+		else {
 			return true;	
 		}
-		
 	}
 
 	public boolean isFull() {
-		
 		if (capacity() > 0 && buffer_counter >= capacity()) {
 			return true;
 		}
-		else 
-		{
+		else {
 			return false;
 		}
-		
-}
-
-	public void put(int i) throws CircularBufferException{
-			buffer.add(i);
-			buffer_counter++;
 	}
 
+	public void put(int i) throws CircularBufferException
+	{
+		if (!isFull()) {
+			buffer.add(i);
+			buffer_counter++;
+		}
+		else {
+			throw new CircularBufferException("Put to full circular buffer");
+		}
+	}
+	
 	public int get() {
-		int elemnt = buffer.remove(out_counter);
-		buffer_counter--;
-		return elemnt;
+		if (!isEmpty()) {
+			int elemnt = buffer.remove(out_counter);
+			buffer_counter--;
+			return elemnt;
+		}
+		else {
+			throw new CircularBufferException("Get from empty circular buffer");
+		}
 	}
 
 	public int capacity() {
 		return cap;
 	}
-
 }

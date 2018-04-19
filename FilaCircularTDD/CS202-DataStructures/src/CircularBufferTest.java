@@ -74,32 +74,27 @@ public class CircularBufferTest extends TestCase {
 	 * 3) Ter um nome significativo
 	 */
 	
-
 	public void testShouldBeEmptyAfterCreate() {
 		assertTrue(buffer.isEmpty());
 	}
 
-	public void testNotFullAfterCreation()
-	{
+	public void testNotFullAfterCreation(){
 		assertTrue(!buffer.isFull());
 	}
 
-	public void testNotEmptyAfterput()
-	{
+	public void testNotEmptyAfterput(){
 		buffer.put(10046);
 		assertTrue(!buffer.isEmpty());
 	}
 
-	public void testNotEmptyThenEmpty()
-	{
+	public void testNotEmptyThenEmpty(){
 		buffer.put(4567);
 		assertTrue(!buffer.isEmpty());
 		buffer.get();
 		assertTrue(buffer.isEmpty());
 	}
 	
-	public void testGetPutOneValue()
-	{
+	public void testGetPutOneValue(){
 		buffer.put(4567);
 		assertEquals(4567, buffer.get());
 	}
@@ -116,8 +111,7 @@ public class CircularBufferTest extends TestCase {
 	 * 
 	 */
 	
-	public void testGetPutAFew()
-	{
+	public void testGetPutAFew(){
 		buffer.put(1);
 		buffer.put(2);
 		buffer.put(3);
@@ -148,8 +142,7 @@ public class CircularBufferTest extends TestCase {
 	 * 
 	 */
 
-	public void testIsFull()
-	{
+	public void testIsFull(){
 		for (int i = 0; i < buffer.capacity(); i++)
 			buffer.put(i + 100);
 		assertTrue(buffer.isFull());
@@ -162,17 +155,15 @@ public class CircularBufferTest extends TestCase {
 	 * entao voce deve DELETA-LA.
 	 */
 
-	public void testEmptyToFullToEmpty()
-	{
+	public void testEmptyToFullToEmpty(){
 		for (int i = 0; i < buffer.capacity(); i++)
 		buffer.put(i + 100);
 
-		for (int j = 0; j < buffer.capacity(); j++)
-		{
+		for (int j = 0; j < buffer.capacity(); j++){
 			assertEquals(j + 100, buffer.get());
 			assertTrue(!buffer.isFull());
 		}
-
+		
 		assertTrue(buffer.isEmpty());
 	}
 
@@ -183,8 +174,7 @@ public class CircularBufferTest extends TestCase {
 	 * Finalmente o teste que exercita o 'dar a volta' na fila circular.
 	 */
 
-	public void testWrapAround()
-	{
+	public void testWrapAround(){
 		int capacity = buffer.capacity();
 		int seed = 100;
 		
@@ -224,8 +214,7 @@ public class CircularBufferTest extends TestCase {
 	 *
 	 */
 	
-	public void testPutToFullThrows()
-	{
+	public void testPutToFullThrows(){
 		fillTheBuffer(900, buffer.capacity());
 
 		try
@@ -241,52 +230,59 @@ public class CircularBufferTest extends TestCase {
 	}
 
 	private void fillTheBuffer(int seed, int capacity) {
-		for (int i = 0; i <= capacity; i++)
+		for (int i = 0; i < capacity; i++)
 			buffer.put(i + seed);
 	}
 
-//	public void testPutToFullDoesNotDamageContents()
-//	{
-//		fillTheBuffer(900, buffer.capacity());
-//
-//		try
-//		{
-//			buffer.put(9999);
-//		}
-//		catch (CircularBufferException e)
-//		{
-//		}
-//
-//		drainAndCheck(900, buffer.capacity());
-//
-//		assertTrue(buffer.isEmpty());
-//	}
+	public void testPutToFullDoesNotDamageContents(){
+		fillTheBuffer(900, buffer.capacity());
+
+		try
+		{
+			buffer.put(9999);
+		}
+		catch (CircularBufferException e)
+		{
+		}
+
+		drainAndCheck(900, buffer.capacity());
+
+		assertTrue(buffer.isEmpty());
+	}
+
+	private void drainAndCheck(int seed, int capacity) {
+		for (int i = 0; i < capacity; i++)
+			buffer.get();
+	}
 
 	/*
 	 * Veja se mais algum retatoramento eh necessario
 	 *
 	 */
 
-//	public void testGetFromEmptyThrows()
-//	{
-//		try
-//		{
-//			buffer.get();
-//			fail("Get from empty should throw");
-//		}
-//		catch (CircularBufferException e)
-//		{
-//			String expected = "Get from empty circular buffer";
-//			assertEquals(expected, e.getMessage());
-//			assertTrue(buffer.isEmpty());
-//		}
-//	}
+	public void testGetFromEmptyThrows()
+	{
+		try
+		{
+			buffer.get();
+			fail("Get from empty should throw");
+		}
+		catch (CircularBufferException e)
+		{
+			String expected = "Get from empty circular buffer";
+			assertEquals(expected, e.getMessage());
+			assertTrue(buffer.isEmpty());
+		}
+	}
 
 	/*
 	 * Voce acha que esta lista de testes é suficiente para implementarmos uma fila circular?
-	 * Implemente  um teste que avalia uma caracteristica que a fila circular deve ter que os testes
+	 * Implemente um teste que avalia uma caracteristica que a fila circular deve ter que os testes
 	 * acima não exercitam.
-	 * 
 	 */
+	
+	
 
+	
+	
 }
